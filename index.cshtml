@@ -1,0 +1,71 @@
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <div id="mylist">
+            <ul>
+                <li><input type="checkbox" value="1111" /><label>chck1</label></li>
+                <li><input type="checkbox" value="2111" /><label>chck2</label></li>
+                <li><input type="checkbox" value="3111" /><label>chck3</label></li>
+                <li><input type="checkbox" value="4111" /><label>chck4</label></li>
+                <li><input type="checkbox" value="5111" /><label>chck5</label></li>
+                <li><input type="checkbox" value="6111" /><label>chck6</label></li>
+                <li><input type="checkbox" value="7111"  /><label>chck7</label></li>
+            </ul>
+        </div>
+        <button id="btn">Get Button</button>
+        <button id="setbtn">Set Button</button>
+    </div>
+</div>
+<script>
+$("#mylist>ul>li>input").click(function(){
+if (!$(this).hasClass("isChecked")) { 
+$(this).addClass("isChecked");} else {$(this).removeClass("isChecked");}
+});
+$("#setbtn").click(function () {
+        const obj = [];
+       const getObjs = $("#mylist > ul").children();
+        getObjs.each(function () {
+            obj.push({ gethtml: $(this).children().eq(1).html(), value: $(this).children().eq(0).attr("value"), class: $(this).children().eq(0).attr("class") })
+        })
+
+        document.cookie = "mylist=" + JSON.stringify(obj);
+   
+
+}); 
+$("#btn").click(function() {
+    const t = document.cookie;
+    console.log(t);
+    const list = JSON.parse(t.substring(t.indexOf("=")+1));
+    console.log(list);
+ $("#mylist > ul").html("");
+   
+    $.each(list, function (index, val) {
+        const getClass = val.class == "isChecked"? "checked" : "";
+$("#mylist > ul").append("<li><input type='checkbox' value="+val.value+" class="+val.class+" "+getClass+"/><label>"+val.gethtml+"</label></li>")
+
+    }) 
+});
+</script>
